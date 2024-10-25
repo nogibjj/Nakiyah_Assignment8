@@ -3,7 +3,7 @@ import numpy as np
 
 def dummyDF():
     # Creating a better quality DataFrame with meaningful data
-    data = {
+    data_dict = {
         'Employee_ID': range(1001, 1026),  # Employee IDs from 1001 to 1025
         'Age': np.random.randint(22, 60, size=25),  # Random ages between 22 and 60
         'Salary': np.random.randint(40000, 120000, size=25),  # Random salary between 40k and 120k
@@ -12,7 +12,7 @@ def dummyDF():
     }
 
     # Creating the DataFrame
-    df = pd.DataFrame(data)
+    df = pd.DataFrame(data_dict)
 
     # Select a column, e.g., 'Salary', and calculate its statistics
     salary_column = df['Salary']
