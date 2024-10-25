@@ -1,5 +1,5 @@
 use polars::prelude::*;
-use rand::distributions::{Uniform, Distribution};
+use rand::distributions::{Distribution, Uniform};
 use rand::seq::SliceRandom;
 use rand::thread_rng;
 use std::time::Instant;
@@ -20,7 +20,9 @@ pub fn dummy_df() -> Result<(DataFrame, f64, f64, i64, usize), PolarsError> {
 
     // Random department choices
     let departments = vec!["HR", "Finance", "IT", "Marketing", "Operations"];
-    let department: Vec<&str> = (0..25).map(|_| *departments.choose(&mut rng).unwrap()).collect();
+    let department: Vec<&str> = (0..25)
+        .map(|_| *departments.choose(&mut rng).unwrap())
+        .collect();
 
     // Random years of experience between 1 and 35
     let exp_dist = Uniform::new_inclusive(1, 35);
@@ -54,7 +56,6 @@ pub fn process_data(data: &[i32]) -> i64 {
         .filter(|&x| x <= 1000) // You can keep this as it is
         .sum() // Sum will be an i64
 }
-
 
 pub fn get_memory_usage() -> f64 {
     let mut sys = System::new_all();

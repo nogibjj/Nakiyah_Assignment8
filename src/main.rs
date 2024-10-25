@@ -5,7 +5,7 @@ use main_rust::{dummy_df, measure_performance}; // Use the actual crate name def
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Generate the dummy DataFrame and its statistics
     let (df, mean_salary, median_salary, sum_salary, count_salary) = dummy_df()?;
-    
+
     // Display DataFrame and salary statistics
     println!("DataFrame:\n{}", df);
     println!("\nSalary Statistics:");
@@ -26,4 +26,3 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     Ok(())
 }
-
