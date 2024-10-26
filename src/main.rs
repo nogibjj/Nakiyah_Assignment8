@@ -1,28 +1,24 @@
-// src/main.rs
+// Import the library module
+use main_rust::{dummy_df, measure_performance};
 
-use main_rust::{dummy_df, measure_performance}; // Use the actual crate name defined in Cargo.toml
-
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // Generate the dummy DataFrame and its statistics
-    let (df, mean_salary, median_salary, sum_salary, count_salary) = dummy_df()?;
-
-    // Display DataFrame and salary statistics
-    println!("DataFrame:\n{}", df);
-    println!("\nSalary Statistics:");
-    println!("Mean Salary: {}", mean_salary);
-    println!("Median Salary: {}", median_salary);
+fn main() {
+    let (employees, mean_salary, median_salary, sum_salary, count_salary) = dummy_df();
+    
+    println!("DataFrame and statistics:");
+    for employee in &employees {
+        println!("ID: {}, Age: {}, Salary: {}, Dept: {}, Experience: {}",
+            employee.employee_id, employee.age, employee.salary, employee.department, employee.years_of_experience);
+    }
+    println!("Mean Salary: {:.2}", mean_salary);
+    println!("Median Salary: {:.2}", median_salary);
     println!("Sum of Salaries: {}", sum_salary);
     println!("Count of Salaries: {}", count_salary);
 
-    // Process the salary data for performance measurement
-    // Get the Salary column as i32
-    let salary_series = df.column("Salary")?.i32()?;
-
-    // Convert the ChunkedArray to a Vec<i32>
-    let salary_vec: Vec<i32> = salary_series.into_iter().filter_map(|opt| opt).collect();
-
-    // Measure performance on the Salary data
-    measure_performance(&salary_vec);
-
-    Ok(())
+    // Sample data to test performance
+    let sample_data: Vec<u32> = employees.iter().map(|e| e.age).collect();
+    
+    // Measure performance of summing ages
+    println!("About to call measure_performance...");
+    measure_performance(&sample_data);
+    println!("Finished measure_performance call.");
 }

@@ -4,6 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-sysinfo = "0.25"
+rand = "0.8"  
+sysinfo = "0.26"
 polars = { version = "0.25.0", features = ["lazy", "random"] }
-rand = "0.8"

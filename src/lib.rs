@@ -1,80 +1,100 @@
-use polars::prelude::*;
-use rand::distributions::{Distribution, Uniform};
-use rand::seq::SliceRandom;
-use rand::thread_rng;
+use rand::Rng;
+use rand::distributions::{Uniform, Slice};
+use sysinfo::{System, SystemExt, ProcessExt};
 use std::time::Instant;
-use sysinfo::{System, SystemExt};
 
-pub fn dummy_df() -> Result<(DataFrame, f64, f64, i64, usize), PolarsError> {
-    // Employee ID range
-    let employee_id: Vec<i32> = (1001..1026).collect();
+// Struct to represent an employee
+pub struct Employee {
+    pub employee_id: u32,
+    pub age: u32,
+    pub salary: u32,
+    pub department: String,
+    pub years_of_experience: u32,
+}
 
-    // Random ages between 22 and 60
-    let age_dist = Uniform::new_inclusive(22, 60);
-    let mut rng = thread_rng();
-    let age: Vec<i32> = (0..25).map(|_| age_dist.sample(&mut rng)).collect();
-
-    // Random salary between 40k and 120k
-    let salary_dist = Uniform::new_inclusive(40000, 120000);
-    let salary: Vec<i32> = (0..25).map(|_| salary_dist.sample(&mut rng)).collect();
-
-    // Random department choices
-    let departments = vec!["HR", "Finance", "IT", "Marketing", "Operations"];
-    let department: Vec<&str> = (0..25)
-        .map(|_| *departments.choose(&mut rng).unwrap())
+// Function to create dummy data
+pub fn dummy_df() -> (Vec<Employee>, f64, f64, u32, usize) {
+    let mut rng = rand::thread_rng();
+    let departments = ["HR", "Finance", "IT", "Marketing", "Operations"];
+    
+    let employees: Vec<Employee> = (1001..=1025)
+        .map(|id| Employee {
+            employee_id: id,
+            age: rng.sample(Uniform::new(22, 60)),
+            salary: rng.sample(Uniform::new(40000, 120000)),
+            department: rng.sample(Slice::new(&departments).unwrap()).to_string(),
+            years_of_experience: rng.sample(Uniform::new(1, 35)),
+        })
         .collect();
-
-    // Random years of experience between 1 and 35
-    let exp_dist = Uniform::new_inclusive(1, 35);
-    let years_of_experience: Vec<i32> = (0..25).map(|_| exp_dist.sample(&mut rng)).collect();
-
-    // Creating the DataFrame
-    let df = DataFrame::new(vec![
-        Series::new("Employee_ID", employee_id),
-        Series::new("Age", age),
-        Series::new("Salary", salary.clone()),
-        Series::new("Department", department),
-        Series::new("Years_of_Experience", years_of_experience),
-    ])?;
-
-    // Calculating statistics for the Salary column
-    let mean_salary = salary.iter().map(|&x| x as f64).sum::<f64>() / salary.len() as f64;
+    
+    let salaries: Vec<u32> = employees.iter().map(|e| e.salary).collect();
+    let mean_salary = salaries.iter().sum::<u32>() as f64 / salaries.len() as f64;
     let median_salary = {
-        let mut sorted_salary = salary.clone();
-        sorted_salary.sort_unstable();
-        sorted_salary[sorted_salary.len() / 2] as f64
+        let mut sorted_salaries = salaries.clone();
+        sorted_salaries.sort();
+        if sorted_salaries.len() % 2 == 0 {
+            (sorted_salaries[sorted_salaries.len() / 2 - 1] as f64 + sorted_salaries[sorted_salaries.len() / 2] as f64) / 2.0
+        } else {
+            sorted_salaries[sorted_salaries.len() / 2] as f64
+        }
     };
-    let sum_salary: i64 = salary.iter().map(|&x| x as i64).sum();
-    let count_salary = salary.len();
+    let sum_salary = salaries.iter().sum();
+    let count_salary = salaries.len();
 
-    Ok((df, mean_salary, median_salary, sum_salary, count_salary))
+    (employees, mean_salary, median_salary, sum_salary, count_salary)
 }
 
-pub fn process_data(data: &[i32]) -> i64 {
-    data.iter()
-        .map(|&x| (x as i64) * (x as i64)) // Cast to i64 before squaring
-        .filter(|&x| x <= 1000) // You can keep this as it is
-        .sum() // Sum will be an i64
-}
-
+// Function to get memory usage in MB
 pub fn get_memory_usage() -> f64 {
-    let mut sys = System::new_all();
-    sys.refresh_memory();
-
-    let used_memory = sys.used_memory();
-    used_memory as f64 / (1024.0 * 1024.0) // Convert to MB
+    let s = System::new_all();
+    let process = s.process(sysinfo::get_current_pid().expect("Failed to get current PID")).expect("Failed to get process");
+    process.memory() as f64 / 1024.0  // Convert to MB
 }
 
-pub fn measure_performance(data: &[i32]) {
+// Dummy processing function for performance measurement
+pub fn process_data(data: &[u32]) -> u32 {
+    data.iter().sum()
+}
+
+// Function to measure performance
+pub fn measure_performance(data: &[u32]) {
+    let memory_before = get_memory_usage();
     let start_time = Instant::now();
-
     let result = process_data(data);
-
     let elapsed_time = start_time.elapsed();
-    let memory_usage = get_memory_usage();
+    let memory_after = get_memory_usage();
+    let memory_usage = memory_after - memory_before;
 
-    // Print the results
     println!("Processed Result: {}", result);
     println!("Running Time: {:.6?} seconds", elapsed_time);
-    println!("Memory Usage: {:.6} MB", memory_usage);
+    println!("Memory Usage During Execution: {:.6} MB", memory_usage);
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    
+    #[test]
+    fn test_dummy_df() {
+        let (employees, mean_salary, median_salary, sum_salary, count_salary) = dummy_df();
+        
+        assert_eq!(employees.len(), 25); // Ensure 25 employees are generated
+        assert!(mean_salary > 0.0); // Ensure mean salary is positive
+        assert!(median_salary > 0.0); // Ensure median salary is positive
+        assert!(sum_salary > 0); // Ensure sum of salaries is positive
+        assert_eq!(count_salary, employees.len()); // Ensure count matches length of employee vector
+    }
+
+    #[test]
+    fn test_process_data() {
+        let data = [1, 2, 3, 4];
+        let result = process_data(&data);
+        assert_eq!(result, 10); // 1 + 2 + 3 + 4 = 10
+    }
+
+    #[test]
+    fn test_get_memory_usage() {
+        let memory_usage = get_memory_usage();
+        assert!(memory_usage > 0.0, "Memory usage should be greater than 0");
+    }
 }
