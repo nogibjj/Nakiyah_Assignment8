@@ -1,4 +1,5 @@
 # Nakiyah_Assignment8
+[![CI/CD](https://github.com/nogibjj/Nakiyah_Assignment8/actions/workflows/rust.yml/badge.svg)](https://github.com/nogibjj/Nakiyah_Assignment8/actions/workflows/rust.yml) [![Rust CI/CD Pipeline](https://github.com/nogibjj/Nakiyah_Assignment8/actions/workflows/cicd.yml/badge.svg)](https://github.com/nogibjj/Nakiyah_Assignment8/actions/workflows/cicd.yml)
 
 
 ## File Structure
@@ -16,13 +17,12 @@ Nakiyah_Assignment7/
 ├── test/
 │   └── test.rs
 ├── .gitignore
-
+├── .Cargo.lock
+├── Cargo.toml
 ├── main.py
 ├── test.py
-├── setup.py
 ├── Makefile
 ├── Requirements.txt
-├── README.md
-├── UserGuide.md
-└── complexQueryLog.md
+└── README.md
 ```
+
