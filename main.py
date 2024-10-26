@@ -61,4 +61,4 @@ print(
 
 # Sample data to test performance
 sampleData = df_dummy["Age"].tolist()
-measurePerformance(sampleData)
+measurePerformance(dummyDF())
