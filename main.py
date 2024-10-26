@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 import psutil
 import time
 
@@ -49,8 +48,7 @@ def measurePerformance(data):
     print(f"Memory Usage During Execution: {memoryUse:.6f} MB")
 
 # Example usage
-dfDummy, salaryMean, salaryMedian, salarySum, salaryCount = dummyDF()
-#print("DataFrame and statistics:", dfDummy, salaryMean, salaryMedian, salarySum, salaryCount, sep="\n")
+dfDummy, meanSalary, medianSalary, sumSalary, countSalary = dummyDF()
 
 # Sample data to test performance
 sampleData = dfDummy["Age"].tolist()
