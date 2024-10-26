@@ -1,5 +1,3 @@
-use rand::Rng;
-use rand::distributions::{Uniform, Slice};
 use sysinfo::{System, SystemExt, ProcessExt};
 use std::time::Instant;
 

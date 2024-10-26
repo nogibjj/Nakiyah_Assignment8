@@ -26,13 +26,11 @@ def dummyDF():
 
     return df, salaryMean, salaryMedian, salarySum, salaryCount
 
-
 # Function to get memory usage (in MB)
 def memoryUsage():
     process = psutil.Process()
     memoryInfo = process.memory_info().rss
     return memoryInfo / (1024 * 1024)  # Convert bytes to MB
-
 
 # Function to measure performance with memory and time precision
 def measurePerformance(data):
@@ -47,9 +45,13 @@ def measurePerformance(data):
     print(f"Running Time: {elapsed_time:.6f} seconds")
     print(f"Memory Usage During Execution: {memoryUse:.6f} MB")
 
-# Example usage
 dfDummy, meanSalary, medianSalary, sumSalary, countSalary = dummyDF()
 
+print("Salary Statistics:",
+      f"Mean: {meanSalary}", f"Median: {medianSalary}",
+      f"Sum: {sumSalary}", f"Count: {countSalary}", sep="\n")
+
+print("\n")
 # Sample data to test performance
-sampleData = dfDummy["Age"].tolist()
+sampleData = dfDummy["Salary"].tolist()
 measurePerformance(sampleData)
