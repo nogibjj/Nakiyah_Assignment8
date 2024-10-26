@@ -1,15 +1,28 @@
 # Nakiyah_Assignment8
 
 
-├── Cargo.lock
-├── Cargo.toml
-├── Makefile
-├── README.md
-├── main.py
-├── requirements.txt
-├── src
+## File Structure
+```
+Nakiyah_Assignment7/
+├── .devcontainer/
+│   ├── devcontainer.json
+│   └── Dockerfile
+├── .github/
+│   ├── workflows/cicd.yml
+│   └── workflows/rust.yml
+├── src/
 │   ├── lib.rs
 │   └── main.rs
-├── test
+├── test/
 │   └── test.rs
-└── test.py
+├── .gitignore
+
+├── main.py
+├── test.py
+├── setup.py
+├── Makefile
+├── Requirements.txt
+├── README.md
+├── UserGuide.md
+└── complexQueryLog.md
+```
