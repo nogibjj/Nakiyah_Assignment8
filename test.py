@@ -14,8 +14,8 @@ def test_dummyDF():
     assert result.returncode == 0
 
     # Check if the output contains expected keywords
-    assert "DataFrame and statistics:" in result.stdout
-    assert "Processed Result (Sum of Data):" in result.stdout
+    assert "Salary Statistics:" in result.stdout
+    assert "Processed Result" in result.stdout
 
 if __name__ == "__main__":
     test_dummyDF()

@@ -17,7 +17,8 @@ fn main() {
 
     // Sample data to test performance
     let sample_data: Vec<u32> = employees.iter().map(|e| e.salary).collect();
-    
+
+    println!();
     // Measure performance of summing Salary
     println!("About to call measure_performance...");
     measure_performance(&sample_data);

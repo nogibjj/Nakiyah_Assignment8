@@ -34,15 +34,15 @@ def memoryUsage():
 
 # Function to measure performance with memory and time precision
 def measurePerformance(data):
-    memoeryBefore = memoryUsage()
+    memoryBefore = memoryUsage()
     startTime = time.perf_counter()  # High-precision timer
     result = sum(data)
-    elapsed_time = time.perf_counter() - startTime
+    elapsedTime = time.perf_counter() - startTime
     memoryAfter = memoryUsage()
-    memoryUse = memoryAfter - memoeryBefore  # Focused memory usage during the task
+    memoryUse = memoryAfter - memoryBefore  # Focused memory usage during the task
 
-    print(f"Processed Result (Sum of Data): {result}")
-    print(f"Running Time: {elapsed_time:.6f} seconds")
+    print(f"Processed Result (Total Salary): {result}")
+    print(f"Running Time: {elapsedTime:.6f} seconds")
     print(f"Memory Usage During Execution: {memoryUse:.6f} MB")
 
 dfDummy, meanSalary, medianSalary, sumSalary, countSalary = dummyDF()
