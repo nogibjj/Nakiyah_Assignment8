@@ -36,9 +36,9 @@ python_format:
 	black *.py
 
 python_lint:
-	pylint --disable==R,C --ignore-patterns=test_.*?py *.py
+	pylint --disable==R,C --ignore-patterns=test.*?py *.py
 
 python_test:
-	python -m pytest -cov=main test_main.py
+	python3 -m pytest -cov=main test.py
 
 python_all: install python_format python_lint python_test
