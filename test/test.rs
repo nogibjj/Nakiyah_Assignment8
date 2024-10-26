@@ -1,7 +1,9 @@
+use main_rust::{dummy_df, process_data, get_memory_usage};
+
 #[cfg(test)]
 mod tests {
     use super::*;
-    use rand::Rng;
+//    use rand::Rng;
     
     // Tests the dummy_df function to ensure it generates 25 employees and that calculated mean, median, sum, and count of salaries are all greater than zero.
     #[test]

@@ -4,7 +4,6 @@ import time
 
 # Function to create the dummy DataFrame
 def dummyDF():
-
     df = pd.DataFrame({
         "Employee_ID": range(1001, 1026),
         "Age": [25, 30, 35, 40, 28, 45, 32, 29, 31, 34, 27, 26, 33, 38, 36, 37, 39, 42, 41, 43, 44, 46, 48, 49, 50],
@@ -15,7 +14,7 @@ def dummyDF():
                                   "Operations", "Finance", "IT", "HR", "Marketing", "Operations", "Finance", "IT", "HR", 
                                   "Marketing", "Operations", "Finance", "IT", "HR", "Marketing", "Operations"],
         "Years_of_Experience": [5, 10, 15, 20, 7, 25, 12, 8, 9, 14, 6, 4, 11, 18, 16, 17, 19, 22, 21, 23, 24, 26, 28, 29, 30]
-        })
+    })
 
     # Calculate statistics for Salary column
     salaryColumn = df["Salary"]
@@ -41,17 +40,45 @@ def measurePerformance(data):
     memoryAfter = memoryUsage()
     memoryUse = memoryAfter - memoryBefore  # Focused memory usage during the task
 
-    print(f"Processed Result (Total Salary): {result}")
-    print(f"Running Time: {elapsedTime:.6f} seconds")
-    print(f"Memory Usage During Execution: {memoryUse:.6f} MB")
+    return result, elapsedTime, memoryUse
 
+# Create dummy DataFrame and calculate statistics
 dfDummy, meanSalary, medianSalary, sumSalary, countSalary = dummyDF()
 
+# Print the salary statistics
 print("Salary Statistics:",
       f"Mean: {meanSalary}", f"Median: {medianSalary}",
       f"Sum: {sumSalary}", f"Count: {countSalary}", sep="\n")
 
-print("\n")
 # Sample data to test performance
 sampleData = dfDummy["Salary"].tolist()
-measurePerformance(sampleData)
+totalSalary, runningTime, memoryUsageDuringExecution = measurePerformance(sampleData)
+
+# Print performance measurement
+print("\n")
+print(f"Processed Result (Total Salary): {totalSalary}")
+print(f"Running Time: {runningTime:.6f} seconds")
+print(f"Memory Usage During Execution: {memoryUsageDuringExecution:.6f} MB")
+
+# Create a Markdown file for Python performance analysis
+performance_analysis = f"""
+# Python Performance Analysis
+## Salary Statistics
+
+- Mean Salary: {meanSalary:.2f}
+- Median Salary: {medianSalary:.2f}
+- Sum of Salaries: {sumSalary}
+- Count of Salaries: {countSalary}
+
+## Performance Measurement
+
+- Processed Result (Total Salary): {totalSalary}
+- Running Time: {runningTime:.6f} seconds
+- Memory Usage During Execution: {memoryUsageDuringExecution:.6f} MB
+"""
+
+# Write the performance analysis to a Markdown file
+with open("Python_Performance.md", "w") as file:
+    file.write(performance_analysis)
+
+print("Performance results have been written to Python_Performance.md")
