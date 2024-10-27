@@ -34,7 +34,7 @@ fn main() {
         
 ## Performance Measurement\n\n\
          - Processed Result (Total Salary): {}\n\
-         - Running Time**: {:.6?} seconds\n\
+         - Running Time: {:.6?} seconds\n\
          - Memory Usage During Execution: {:.6} MB\n",
          mean_salary, median_salary, sum_salary, count_salary, result, elapsed_time, memory_usage
     );

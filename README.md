@@ -47,3 +47,17 @@ This project aims to create a DataFrame of 25 employees and calculate the sum, c
 
 ## Speed and Resource Usage:
 
+The performance comparison between Python and Rust shows similar accuracy in results, as both calculate the same salary statistics. However, there are notable differences in runtime and memory usage that reveal each language's strengths and typical resource utilization.
+
+1. Running Time
+- Python: The Python script processed the salary data in 1 nanosecond (0.000001 seconds).
+- Rust: The Rust program took 1.208 microseconds (or 1,208 nanoseconds), making Python technically faster here by a small margin.
+- Analysis: Python’s slightly faster runtime is somewhat surprising, as Rust generally offers faster performance. This could be due to specific optimizations in Python's environment or nuances in how each language handles floating-point calculations.
+
+2. Memory Usage
+- Python: The memory usage reported during execution was 0.000000 MB (or near zero), indicating minimal memory consumption.
+- Rust: Rust used 7376 MB, which is unexpectedly high for such a simple task.
+- Analysis: Typically, Rust is highly memory-efficient, so the 8960 MB usage may be an outlier or measurement artifact.
+
+Conclusion
+While Python appears faster in this test, this doesn’t reflect typical performance for larger, more complex tasks where Rust would usually excel in speed and memory efficiency.

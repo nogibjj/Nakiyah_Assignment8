@@ -1,4 +1,4 @@
-# Rust Performance Analysis
+# Python Performance Analysis
 ## Salary Statistics
 
 - Mean Salary: 74640.00
@@ -9,5 +9,5 @@
 ## Performance Measurement
 
 - Processed Result (Total Salary): 1866000
-- Running Time: 1.208000µs seconds
-- Memory Usage During Execution: 7376.000000 MB
+- Running Time: 0.000001 seconds
+- Memory Usage During Execution: 0.000000 MB
