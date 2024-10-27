@@ -57,7 +57,7 @@ The performance comparison between Python and Rust shows similar accuracy in res
 2. Memory Usage
 - Python: The memory usage reported during execution was 0.000000 MB (or near zero), indicating minimal memory consumption.
 - Rust: Rust used 7376 MB, which is unexpectedly high for such a simple task.
-- Analysis: Typically, Rust is highly memory-efficient, so the 8960 MB usage may be an outlier or measurement artifact.
+- Analysis: Typically, Rust is highly memory-efficient, so the 7376 MB usage may be an outlier or measurement artifact.
 
 Conclusion
 While Python appears faster in this test, this doesn’t reflect typical performance for larger, more complex tasks where Rust would usually excel in speed and memory efficiency.
